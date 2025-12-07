@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ArchiWood – Image layout test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #020617;
+      --surface: #020818;
+      --border: #1f2937;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: #60a5fa;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-soft: 0 20px 45px rgba(15, 23, 42, 0.55);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 32px 16px 40px;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    header p {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 620px;
+      line-height: 1.6;
+    }
+
+    section {
+      margin-bottom: 40px;
+      padding: 20px 18px 22px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, #030712, #020617);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-head {
+      margin-bottom: 16px;
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .section-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 520px;
+    }
+
+    /* gallery layout – key part for image test */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 14px;
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, #111827 0, #020617 60%);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .card-img-wrap {
+      background: #000;
+      padding: 8px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+    }
+    .card img {
+      width: 100%;
+      height: auto;             /* keep natural aspect ratio – no more squashing */
+      display: block;
+      border-radius: 8px;
+    }
+
+    .card-body {
+      padding: 10px 11px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .card-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .card-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #9ca3af;
+    }
+
+    /* Make a few “key” screenshots visually larger */
+    .card.card--large {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 820px) {
+      body { padding-top: 20px; }
+      header h1 { font-size: 22px; }
+      section { padding: 16px 14px 18px; }
+      .card.card--large { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>ArchiWood – image layout test</h1>
+    <p>
+      This page is only for testing how screenshots are placed on the page.
+      Images use their natural aspect ratio, so nothing should look too flat or stretched.
+      Once you are happy with the layout here, we can copy the same idea back into the main site.
+    </p>
+  </header>
+
+  <!-- 1. Core workflow & project setup -->
+  <section>
+    <div class="section-head">
+      <div class="section-eyebrow">WORKFLOW</div>
+      <div class="section-title">Core workflow &amp; project setup</div>
+      <div class="section-sub">
+        From backend standards to nesting layouts – how an ArchiWood project goes from SketchUp
+        to production-ready panels.
+      </div>
+    </div>
+
+    <div class="gallery">
+      <article class="card card--large">
+        <div class="card-img-wrap">
+          <img src="Backend-Setup1.png" alt="Backend setup – global cabinet standards">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Backend setup</div>
+          <div class="card-title">Global cabinet &amp; machining standards</div>
+          <p class="card-text">
+            Define material defaults, edge banding, drilling patterns and connection rules so every
+            cabinet follows the same factory logic from day one.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Backend-Setup2.png" alt="Backend setup – material and rule configuration">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Backend setup</div>
+          <div class="card-title">Material rules &amp; hardware logic</div>
+          <p class="card-text">
+            Fine-tune grain direction, material families and hardware rules for specific product
+            lines or clients.
+          </p>
+        </div>
+      </article>
+
+      <article class="card card--large">
+        <div class="card-img-wrap">
+          <img src="nesting-layout.png" alt="Nesting layout overview">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Nesting</div>
+          <div class="card-title">Optimised CNC nesting layout</div>
+          <p class="card-text">
+            Preview the cutting pattern generated from the design. Adjust entry points, sequence and
+            material yield before sending code to the machine.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Panel-Stretching.png" alt="Panel stretching and resizing">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Geometry tools</div>
+          <div class="card-title">Panel stretching with structure preserved</div>
+          <p class="card-text">
+            Stretch a cabinet or a single panel while drilling, connectors and joinery update
+            automatically so everything stays manufacturable.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 2. Parametric editing -->
+  <section>
+    <div class="section-head">
+      <div class="section-eyebrow">PARAMETRIC EDITING</div>
+      <div class="section-title">Fast parametric tools for everyday cabinet work</div>
+      <div class="section-sub">
+        Editing panels, modules and openings is done with parameters instead of manual modelling.
+      </div>
+    </div>
+
+    <div class="gallery">
+      <article class="card card--large">
+        <div class="card-img-wrap">
+          <img src="Quick-Stretch.png" alt="Quick stretch of a cabinet run">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Quick stretch</div>
+          <div class="card-title">Resize an entire cabinet run in one gesture</div>
+          <p class="card-text">
+            Change overall width and height while ArchiWood keeps joints, mid-panels and hardware
+            aligned and production-ready.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Parameter-Editing1.png" alt="Parameter editing 1">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Parameters</div>
+          <div class="card-title">Central parameter panel</div>
+          <p class="card-text">
+            Control width, depth, toe kicks and other global values from a single place.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Parameter-Editing2.png" alt="Parameter editing 2">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Modules</div>
+          <div class="card-title">Add functional blocks</div>
+          <p class="card-text">
+            Drop in built-in appliances, drawers or tall units with pre-configured hardware logic.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Parameter-Editing3.png" alt="Parameter editing 3">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Cabinet body</div>
+          <div class="card-title">Adjust carcass layout</div>
+          <p class="card-text">
+            Control dividers, shelves and structural panels while keeping holes and connectors in
+            sync.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Parameter-Editing4.png" alt="Parameter editing 4">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Fronts</div>
+          <div class="card-title">Door &amp; front configuration</div>
+          <p class="card-text">
+            Quickly switch between door layouts and handle solutions without remodelling.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Parameter-Editing5.png" alt="Parameter editing 5">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Wall units</div>
+          <div class="card-title">Focused tools for wall and tall units</div>
+          <p class="card-text">
+            Adjust special units such as tall pantries, oven housings and high wall cabinets.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Parameter-Editing6.png" alt="Parameter editing 6">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Doors &amp; panels</div>
+          <div class="card-title">Detail door panels and infills</div>
+          <p class="card-text">
+            Fine-tune clearances, reveal lines and decorative panels while staying fully parametric.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 3. Recognition, labels & QC -->
+  <section>
+    <div class="section-head">
+      <div class="section-eyebrow">RECOGNITION &amp; QC</div>
+      <div class="section-title">Smart space recognition, labels &amp; quality control</div>
+      <div class="section-sub">
+        Automatic checks and labels help you catch mistakes before production and keep the shop
+        floor organised.
+      </div>
+    </div>
+
+    <div class="gallery">
+      <article class="card card--large">
+        <div class="card-img-wrap">
+          <img src="Space-Recognition2.png" alt="Space recognition 2">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Space recognition</div>
+          <div class="card-title">Recognise usable cabinet zones</div>
+          <p class="card-text">
+            ArchiWood analyses room geometry and highlights valid cabinet zones ready for
+            parametric modules.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Space-Recognition.png" alt="Space recognition 1">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Space recognition</div>
+          <div class="card-title">Detailed space report</div>
+          <p class="card-text">
+            Review detected spans, depths and obstacles before committing to a layout.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Auto-Error-Detection.png" alt="Auto error detection">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Error checking</div>
+          <div class="card-title">Automatic error detection</div>
+          <p class="card-text">
+            Run pre-flight checks for missing parts, invalid drilling or wrong edge banding before
+            sending jobs to nesting.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Label-Options.png" alt="Label options">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Labels</div>
+          <div class="card-title">Flexible label &amp; QR options</div>
+          <p class="card-text">
+            Configure labels, QR codes and barcodes so every panel carries the information your
+            production line needs.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 4. Hardware & libraries -->
+  <section>
+    <div class="section-head">
+      <div class="section-eyebrow">LIBRARIES &amp; HARDWARE</div>
+      <div class="section-title">Smart libraries &amp; automatic hardware</div>
+      <div class="section-sub">
+        Re-usable parametric libraries keep modelling fast while hardware tools ensure every
+        connection is manufacturable.
+      </div>
+    </div>
+
+    <div class="gallery">
+      <article class="card card--large">
+        <div class="card-img-wrap">
+          <img src="cabinet-library1.png" alt="Cabinet library 1">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Cabinet library</div>
+          <div class="card-title">Base &amp; wall cabinet families</div>
+          <p class="card-text">
+            A visual library of everyday base and wall cabinets that can all be stretched,
+            re-configured and sent directly to CNC.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="cabinet-library2.png" alt="Cabinet library 2">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Cabinet library</div>
+          <div class="card-title">Tall units &amp; corner solutions</div>
+          <p class="card-text">
+            Specialised units for tall storage, appliances and corner cabinets, all parameter-driven.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="cabinet-library3.png" alt="Cabinet library 3">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Components</div>
+          <div class="card-title">Fronts, fillers &amp; decorative parts</div>
+          <p class="card-text">
+            Detailed components used across projects, keeping design and production consistent.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Auto-Hardware-Slotting.png" alt="Auto hardware slotting">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Hardware</div>
+          <div class="card-title">Automatic hardware slotting</div>
+          <p class="card-text">
+            Generate mortises and slots for connectors according to factory rules in a single step.
+          </p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img-wrap">
+          <img src="Add-Handles.png" alt="Add handles">
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Hardware</div>
+          <div class="card-title">Batch handle placement</div>
+          <p class="card-text">
+            Place handles according to rules, then update all cabinets at once when the client
+            changes style.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
