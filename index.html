@@ -1,104 +1,158 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArchiWood 橱柜设计 & CNC 生产系统</title>
+<meta charset="UTF-8">
+<title>ArchiWood 橱柜设计 & CNC 生产系统</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: "Segoe UI", Arial, sans-serif;
-            background: #f4f6fa;
-        }
+<style>
+body { margin:0; font-family:"Segoe UI", sans-serif; background:#f5f6fa; }
+a { text-decoration:none; }
 
-        /* 顶部蓝色区域 */
-        header {
-            background: #013A91;
-            padding: 40px 0;
-            color: #fff;
-            text-align: center;
-        }
-        header h1 {
-            font-size: 32px;
-            margin: 0;
-            font-weight: 700;
-        }
-        header p {
-            font-size: 16px;
-            opacity: 0.9;
-            margin-top: 8px;
-        }
+/* ===== 顶部导航栏 ===== */
+header {
+    background:#003f91;
+    color:white;
+    padding:18px 0;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+.navbar {
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.navbar a {
+    color:white;
+    margin-left:25px;
+    font-size:17px;
+}
+.navbar a:hover { opacity:0.7; }
 
-        /* 分区标题 */
-        h2 {
-            text-align: center;
-            margin-top: 50px;
-            font-size: 26px;
-            color: #1a1a1a;
-        }
+/* ===== 标题区 ===== */
+.hero {
+    text-align:center;
+    padding:60px 20px;
+    background:white;
+}
+.hero h1 {
+    font-size:36px;
+    color:#003f91;
+}
+.hero p {
+    font-size:18px;
+    color:#555;
+}
 
-        /* 图片卡片布局 */
-        .gallery {
-            max-width: 1300px;
-            margin: 40px auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
-        }
+/* ===== 图片展示区 ===== */
+.gallery {
+    max-width:1200px;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(350px, 1fr));
+    gap:20px;
+}
+.card {
+    background:white;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 5px 25px rgba(0,0,0,0.1);
+}
+.card img {
+    width:100%;
+    height:240px;
+    object-fit:cover;
+}
+.card-title {
+    padding:15px;
+    font-size:16px;
+    color:#003f91;
+}
 
-        .card {
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-            transition: 0.3s;
-        }
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-        }
+/* ===== 分段标题 ===== */
+.section-title {
+    text-align:center;
+    font-size:28px;
+    margin:60px 0 20px;
+    color:#003f91;
+}
 
-        .card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
+/* ===== 产品功能区 ===== */
+.features {
+    max-width:1100px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 5px 25px rgba(0,0,0,0.1);
+    line-height:1.8;
+    font-size:18px;
+}
 
-        .card-title {
-            padding: 12px 16px;
-            font-size: 15px;
-            font-weight: 600;
-            color: #013A91;
-            background: #f5f7ff;
-        }
+/* ===== 视频教程区 ===== */
+.video-box {
+    max-width:900px;
+    margin:30px auto;
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 5px 25px rgba(0,0,0,0.1);
+}
+iframe {
+    width:100%;
+    height:450px;
+    border-radius:12px;
+}
 
-        @media (max-width: 900px) {
-            .gallery {
-                grid-template-columns: repeat(2,1fr);
-            }
-        }
-        @media (max-width: 600px) {
-            .gallery {
-                grid-template-columns: repeat(1,1fr);
-            }
-        }
-    </style>
+/* ===== 联系方式 ===== */
+.contact-box {
+    max-width:800px;
+    margin:40px auto;
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 5px 25px rgba(0,0,0,0.1);
+    font-size:18px;
+    line-height:2;
+}
+
+/* ===== 页脚 ===== */
+footer {
+    text-align:center;
+    padding:20px;
+    color:#888;
+}
+</style>
 </head>
 
 <body>
 
-<!-- 顶部标题 -->
+<!-- 顶部导航 -->
 <header>
-    <h1>ArchiWood 橱柜设计 & CNC 生产系统</h1>
-    <p>极速建模 · 自动排料 · 智能打孔 · CNC 输出 · 标签二维码</p>
+    <div class="navbar">
+        <div style="font-size:20px; font-weight:bold;">ArchiWood 橱柜设计 & CNC 系统</div>
+        <div>
+            <a href="#gallery">软件截图</a>
+            <a href="#features">产品介绍</a>
+            <a href="#videos">视频教程</a>
+            <a href="#contact">联系我们</a>
+        </div>
+    </div>
 </header>
 
-<h2>软件界面 & 实际流程 · Screens & Workflow</h2>
+<!-- 顶部介绍区 -->
+<section class="hero">
+    <h1>ArchiWood 橱柜设计 & CNC 生产系统</h1>
+    <p>极速建模 · 自动排料 · 智能打孔 · CNC 输出 · 标签二维码 · 全工厂工艺支持</p>
+</section>
 
-<!-- 图片展示区 -->
+<!-- 软件截图展示 -->
+<h2 class="section-title" id="gallery">软件界面 & 实际流程 · Screens & Workflow</h2>
+
 <div class="gallery">
-
     <div class="card">
         <img src="nesting-layout.png">
         <div class="card-title">自动排料 · Nesting layout</div>
@@ -119,7 +173,52 @@
         <div class="card-title">橱柜参数库 03 · Cabinet Library</div>
     </div>
 
+    <div class="card">
+        <img src="nesting-layout2.png">
+        <div class="card-title">Nesting layout 示例 02</div>
+    </div>
 </div>
+
+<!-- 产品介绍 -->
+<h2 class="section-title" id="features">产品功能介绍 · Features</h2>
+
+<div class="features">
+    ✔ 极速建模：比传统 CAD 快 3–5 倍<br>
+    ✔ 全参数化模型库：橱柜 / 衣柜 / 高柜 / 门板 / 台面<br>
+    ✔ 自动排料：智能优化开料方案，节省 10–20% 板材<br>
+    ✔ CNC 输出：支持 G-code / XXL / CIX / CSV<br>
+    ✔ 打孔规则自动生成：Minifix、木销、拉米诺、暗铰链等<br>
+    ✔ 工艺可配置：顶底板、背板、封边、见光面自由调整<br>
+    ✔ 二维码标签：包含板件信息、五金数量、装配方向<br>
+    ✔ 工厂可定制：对接任意 CNC 设备与本地生产流程<br>
+</div>
+
+<!-- 视频教程 -->
+<h2 class="section-title" id="videos">视频教程 · Tutorials</h2>
+
+<div class="video-box">
+    <h3>入门教程</h3>
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID1"></iframe>
+</div>
+
+<div class="video-box">
+    <h3>自动排料演示</h3>
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID2"></iframe>
+</div>
+
+<!-- 联系方式 -->
+<h2 class="section-title" id="contact">联系我们 · Contact</h2>
+
+<div class="contact-box">
+    📞 WhatsApp：<b>+1 234 567 890</b><br>
+    💬 微信：<b>your-wechat</b><br>
+    📧 Email：<b>your@email.com</b><br>
+    🌐 官网：<b>wodemine1-jpg.github.io</b><br>
+</div>
+
+<footer>
+    © 2025 ArchiWood — 橱柜设计与 CNC 生产系统
+</footer>
 
 </body>
 </html>
