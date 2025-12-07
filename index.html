@@ -2,34 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>ArchiWood · SketchUp-Based Cabinet Design & CNC System</title>
+  <title>ArchiWood · Parametric Cabinet Design & CNC Workflow</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description"
-        content="ArchiWood is a SketchUp-based cabinet & custom furniture design system. What you see is what you manufacture: parametric libraries, automatic hardware, nesting and direct CNC output." />
+  <meta name="description" content="ArchiWood is a SketchUp-based parametric cabinet and custom furniture system that connects design, BOM, nesting and CNC in a single workflow." />
 
   <style>
     :root {
-      --blue: #0d6efd;
-      --blue-dark: #084298;
-      --bg-light: #f5f7fb;
-      --text-main: #111827;
-      --text-muted: #6b7280;
-      --radius: 18px;
-      --shadow: 0 12px 30px rgba(15, 23, 42, 0.14);
+      --blue: #2563eb;
+      --blue-dark: #1d3b8f;
+      --bg: #020617;
+      --bg-light: #0b1120;
+      --card: #020617;
+      --border: #1e293b;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent-soft: rgba(37, 99, 235, 0.12);
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.65);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 55%) fixed;
       color: var(--text-main);
-      background: #ffffff;
-      line-height: 1.6;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
     }
 
-    a { color: inherit; text-decoration: none; }
-
     img { max-width: 100%; display: block; }
+
+    a { color: inherit; text-decoration: none; }
 
     .container {
       max-width: 1120px;
@@ -37,842 +42,967 @@
       padding: 0 16px;
     }
 
-    /* Header / nav --------------------------------------------------------- */
+    /* Header / nav -------------------------------------------------------- */
+
     header {
-      border-bottom: 1px solid #e5e7eb;
-      background: rgba(255,255,255,.96);
-      backdrop-filter: blur(14px);
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.75));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
     }
+
     .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 0;
+      padding: 10px 0;
+      font-size: 14px;
     }
+
     .logo {
-      font-weight: 800;
-      font-size: 20px;
-      color: var(--blue-dark);
-      letter-spacing: .03em;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #f9fafb;
     }
+
     .logo span {
       display: inline-block;
+      margin-left: 8px;
       padding: 2px 10px;
-      margin-left: 6px;
       border-radius: 999px;
-      background: rgba(13,110,253,.08);
       font-size: 11px;
-      text-transform: uppercase;
-      color: var(--blue);
+      text-transform: none;
+      background: rgba(37, 99, 235, 0.16);
+      color: #bfdbfe;
     }
+
     .nav-links {
       display: flex;
       gap: 18px;
-      font-size: 14px;
       color: var(--text-muted);
     }
-    .nav-links a:hover { color: var(--blue); }
 
-    /* Buttons -------------------------------------------------------------- */
+    .nav-links a {
+      padding: 4px 0;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #60a5fa, #a855f7);
+      transition: width 0.18s ease;
+    }
+
+    .nav-links a:hover {
+      color: #e5e7eb;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Buttons ------------------------------------------------------------- */
+
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 6px;
       padding: 9px 18px;
       border-radius: 999px;
-      font-size: 14px;
       border: 1px solid transparent;
+      font-size: 14px;
       cursor: pointer;
       white-space: nowrap;
-      transition: all .16s ease;
-    }
-    .btn-primary {
-      background: var(--blue);
-      color: #fff;
-      box-shadow: var(--shadow);
-    }
-    .btn-primary:hover {
-      background: var(--blue-dark);
-      transform: translateY(-1px);
-    }
-    .btn-outline {
-      border-color: rgba(148,163,184,.9);
-      background: #fff;
-      color: var(--text-main);
-    }
-    .btn-outline:hover {
-      border-color: var(--blue);
-      color: var(--blue);
+      transition: all 0.18s ease;
     }
 
-    /* Hero ----------------------------------------------------------------- */
-    .hero {
-      padding: 56px 0 42px;
-      background:
-        radial-gradient(circle at top left, #e0ecff 0, transparent 55%),
-        radial-gradient(circle at bottom right, #dbeafe 0, transparent 55%);
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      color: #f9fafb;
+      box-shadow: var(--shadow-soft);
     }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: rgba(148, 163, 184, 0.7);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      border-color: #60a5fa;
+      color: #e5e7eb;
+    }
+
+    /* Hero ---------------------------------------------------------------- */
+
+    .hero {
+      padding: 48px 0 40px;
+    }
+
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
       gap: 32px;
       align-items: center;
     }
-    .hero-eyebrow {
+
+    .hero-kicker {
       font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--blue-dark);
+      color: #93c5fd;
       margin-bottom: 10px;
     }
+
     .hero-title {
       font-size: 34px;
+      line-height: 1.15;
       font-weight: 800;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
-    .hero-title span { color: var(--blue); }
+
+    .hero-title span.accent {
+      background: linear-gradient(135deg, #60a5fa, #c4b5fd);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
     .hero-sub {
       font-size: 15px;
       color: var(--text-muted);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
-    .hero-sub strong { color: var(--text-main); }
+
+    .hero-sub strong {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
+
     .hero-note {
       font-size: 12px;
       color: var(--text-muted);
     }
+
     .hero-card {
-      border-radius: var(--radius);
-      padding: 18px;
-      background: #fff;
-      box-shadow: var(--shadow);
+      background: radial-gradient(circle at top left, #1d283a 0, #020617 62%);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow-soft);
     }
-    .hero-tag {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(13,110,253,.06);
-      color: var(--blue-dark);
-      font-size: 12px;
+
+    .hero-card-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #93c5fd;
       margin-bottom: 8px;
     }
+
     .hero-list {
       list-style: none;
       font-size: 13px;
       color: var(--text-muted);
     }
+
     .hero-list li {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       margin-bottom: 6px;
     }
-    .bullet {
-      width: 16px;
-      height: 16px;
-      border-radius: 999px;
-      background: rgba(13,110,253,.16);
+
+    .hero-list .bullet {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
-      color: var(--blue-dark);
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #bfdbfe;
+      font-size: 11px;
       flex-shrink: 0;
     }
 
-    /* Generic section ------------------------------------------------------ */
-    section { padding: 40px 0; }
+    /* Sections ------------------------------------------------------------ */
+
+    section {
+      padding: 36px 0;
+    }
 
     .section-head {
-      text-align: center;
-      margin-bottom: 26px;
+      text-align: left;
+      margin-bottom: 18px;
     }
-    .section-eyebrow {
-      font-size: 11px;
-      letter-spacing: .18em;
+
+    .section-kicker {
+      font-size: 12px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--blue-dark);
+      color: #93c5fd;
       margin-bottom: 4px;
     }
+
     .section-title {
       font-size: 22px;
       font-weight: 700;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
+
     .section-sub {
       font-size: 14px;
       color: var(--text-muted);
       max-width: 720px;
-      margin: 0 auto;
     }
 
-    /* Cards & grids -------------------------------------------------------- */
-    .grid-3 {
+    .text-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
       gap: 18px;
-    }
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-      gap: 18px;
-    }
-    .card {
-      border-radius: var(--radius);
-      border: 1px solid #e5e7eb;
-      padding: 18px;
-      background: #fff;
-    }
-    .card h3 {
-      font-size: 15px;
-      margin-bottom: 6px;
-    }
-    .card p {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-    .pill {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: #eff6ff;
-      color: var(--blue-dark);
-      font-size: 11px;
-      margin-right: 4px;
-      margin-bottom: 4px;
-    }
-
-    /* Workflow steps ------------------------------------------------------- */
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-      gap: 18px;
-    }
-    .step {
-      border-radius: var(--radius);
-      border: 1px solid #e5e7eb;
-      padding: 16px;
-      background: #fff;
-    }
-    .step-number {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      background: var(--blue);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      margin-bottom: 8px;
-    }
-    .step h3 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       font-size: 14px;
-      margin-bottom: 6px;
-    }
-    .step p {
-      font-size: 13px;
       color: var(--text-muted);
-    }
-
-    /* Screenshot gallery --------------------------------------------------- */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-      gap: 14px;
-    }
-    .gallery-item {
-      position: relative;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid #e5e7eb;
-      background: #020617;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-    }
-    .gallery-item.large {
-      grid-column: span 2;
-    }
-    .gallery-caption {
-      padding: 8px 10px 10px;
-      background: linear-gradient(to bottom,#020617,#020617);
-      color: #e5e7eb;
-      font-size: 12px;
-    }
-    .gallery-caption strong {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 2px;
-    }
-
-    /* Contact -------------------------------------------------------------- */
-    .contact-card {
-      max-width: 640px;
-      margin: 0 auto;
-      border-radius: var(--radius);
-      border: 1px solid #e5e7eb;
-      padding: 20px;
-      background: #fff;
-      box-shadow: var(--shadow);
-      font-size: 13px;
-    }
-    .contact-row {
-      display: grid;
-      grid-template-columns: repeat(2,minmax(0,1fr));
-      gap: 12px;
       margin-top: 10px;
     }
-    .contact-label {
+
+    .text-grid p strong {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    /* Screenshot grids ---------------------------------------------------- */
+
+    .topic-block {
+      margin-top: 20px;
+    }
+
+    .topic-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #e5e7eb;
+    }
+
+    .topic-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .shots-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .shot {
+      grid-column: span 4;
+      background: var(--bg-light);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.65);
+    }
+
+    .shot-large {
+      grid-column: span 6;
+    }
+
+    .shot-wide {
+      grid-column: span 8;
+    }
+
+    .shot-img {
+      position: relative;
+      background: #020617;
+    }
+
+    .shot-img img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .shot-body {
+      padding: 8px 10px 10px;
       font-size: 12px;
+    }
+
+    .shot-body h4 {
+      font-size: 13px;
+      margin-bottom: 4px;
+      color: #e5e7eb;
+    }
+
+    .shot-body p {
       color: var(--text-muted);
     }
+
+    /* Contact ------------------------------------------------------------- */
+
+    .contact-card {
+      margin-top: 18px;
+      padding: 18px 18px 16px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at top left, #111827 0, #020617 60%);
+      box-shadow: var(--shadow-soft);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .contact-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #9ca3af;
+      margin-bottom: 3px;
+    }
+
     .contact-value {
-      font-weight: 600;
-      margin-top: 2px;
+      font-size: 14px;
+      color: #e5e7eb;
+      font-weight: 500;
     }
 
     footer {
-      margin-top: 32px;
-      border-top: 1px solid #e5e7eb;
-      text-align: center;
+      border-top: 1px solid rgba(75, 85, 99, 0.7);
+      padding: 14px 0 20px;
       font-size: 12px;
-      color: var(--text-muted);
-      padding: 14px 0;
-      background: #f9fafb;
+      color: #6b7280;
+      text-align: center;
+      margin-top: 28px;
     }
 
-    /* Responsive ----------------------------------------------------------- */
+    /* Responsive ---------------------------------------------------------- */
+
     @media (max-width: 960px) {
-      .hero-grid { grid-template-columns: minmax(0,1fr); }
-      .grid-3 { grid-template-columns: repeat(2,minmax(0,1fr)); }
-      .grid-4 { grid-template-columns: repeat(2,minmax(0,1fr)); }
-      .steps { grid-template-columns: repeat(2,minmax(0,1fr)); }
-      .gallery-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .shots-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+      .shot,
+      .shot-large,
+      .shot-wide {
+        grid-column: span 6;
+      }
+      .text-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
-    @media (max-width: 680px) {
-      .nav-links { display: none; }
-      .grid-3,
-      .grid-4,
-      .steps,
-      .gallery-grid { grid-template-columns: minmax(0,1fr); }
-      .gallery-item.large { grid-column: span 1; }
-      .hero-title { font-size: 26px; }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+      }
+      .hero-title {
+        font-size: 26px;
+      }
+      section {
+        padding: 28px 0;
+      }
+      .shots-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      .shot,
+      .shot-large,
+      .shot-wide {
+        grid-column: span 4;
+      }
     }
   </style>
 </head>
 
 <body>
+
 <header>
   <div class="container nav">
     <div class="logo">
       ArchiWood
-      <span>Cabinet System</span>
+      <span>SketchUp-based cabinet & CNC system</span>
     </div>
     <nav class="nav-links">
       <a href="#overview">Overview</a>
       <a href="#workflow">Workflow</a>
-      <a href="#features">Key Features</a>
-      <a href="#screens">Screenshots</a>
-      <a href="#tutorials">Tutorials</a>
+      <a href="#editing">Parametric editing</a>
+      <a href="#smart">Smart checks</a>
+      <a href="#hardware">Libraries & hardware</a>
+      <a href="#nesting">Nesting & CNC</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <!-- Hero --------------------------------------------------------------- -->
+  <!-- Hero -------------------------------------------------------------- -->
   <section class="hero" id="overview">
     <div class="container hero-grid">
       <div>
-        <div class="hero-eyebrow">SKETCHUP-BASED CABINET & FURNITURE SYSTEM</div>
+        <div class="hero-kicker">DESIGN · BOM · NESTING · CNC</div>
         <h1 class="hero-title">
-          <span>ArchiWood</span> – what you see<br>
-          is exactly what you manufacture
+          <span class="accent">ArchiWood</span> turns SketchUp layouts<br>
+          into <span class="accent">ready-to-cut</span> cabinets.
         </h1>
         <p class="hero-sub">
-          ArchiWood is a <strong>second-development platform on top of SketchUp</strong>.
-          It keeps SketchUp’s free creative workflow and real-time communication with clients,
-          while adding a complete toolset for <strong>parametric cabinets, intelligent hardware,
-          nesting and CNC output</strong>. The design process itself is already the breakdown
-          and production process.
+          ArchiWood is a secondary development on top of SketchUp, built for
+          <strong>kitchen shops, factories and independent designers</strong>.
+          It keeps SketchUp’s free, visual design workflow, but adds
+          <strong>parametric cabinets, BOM, nesting and CNC output</strong>.
+          What you see in SketchUp is what you send to the machine.
         </p>
         <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">Book a Live Demo</a>
-          <a href="#screens" class="btn btn-outline">View Screens & Workflow</a>
+          <a href="#contact" class="btn btn-primary">Book an online demo</a>
+          <a href="#workflow" class="btn btn-outline">See the end-to-end workflow</a>
         </div>
         <p class="hero-note">
-          Remote onboarding available in English & Chinese · Suitable for factories, workshops and independent designers worldwide.
+          Multi-language remote training · We help you build your first real project,
+          including data, tooling and CNC post configuration.
         </p>
       </div>
 
       <aside class="hero-card">
-        <div class="hero-tag">Why ArchiWood?</div>
+        <div class="hero-card-title">Why teams choose ArchiWood</div>
         <ul class="hero-list">
-          <li><span class="bullet">✓</span> SketchUp-native, visual and intuitive – drag, stretch, parametric edit.</li>
-          <li><span class="bullet">✓</span> “What you see is what you cut” – design equals breakdown, no re-drawing.</li>
-          <li><span class="bullet">✓</span> Automatic hardware, connectors and reports directly from the model.</li>
-          <li><span class="bullet">✓</span> Supports classic cam-lock, dowel, Lamello, hidden fasteners and mortise-and-tenon in one project.</li>
-          <li><span class="bullet">✓</span> Smart nesting and multi-format CNC output for your existing machines.</li>
+          <li><span class="bullet">✓</span><span>
+            <strong>What-you-see-is-what-you-manufacture.</strong>
+            The design process is the order splitting process – no redraw in a separate CAM system.
+          </span></li>
+          <li><span class="bullet">✓</span><span>
+            Add or auto-place hardware, then generate
+            <strong>BOM, cutting lists, labels and CNC code</strong> in one pass.
+          </span></li>
+          <li><span class="bullet">✓</span><span>
+            Supports classic cam-lock, <strong>invisible connectors, Lamello, dowels, mortise-and-tenon</strong>
+            and even mixed processes in one job.
+          </span></li>
+          <li><span class="bullet">✓</span><span>
+            Built-in material libraries and one-click <strong>door / carcass material swap</strong>
+            make it easy to try different finishes in front of the client.
+          </span></li>
+          <li><span class="bullet">✓</span><span>
+            Automatic cabinet checks, collision detection and multi-type reports
+            keep production safe and organised.
+          </span></li>
         </ul>
       </aside>
     </div>
   </section>
 
-  <!-- Who it’s for ------------------------------------------------------- -->
+  <!-- High level description -------------------------------------------- -->
   <section>
     <div class="container">
       <div class="section-head">
-        <div class="section-eyebrow">WHO USES ARCHIWOOD</div>
-        <h2 class="section-title">From small workshops to fully automated factories</h2>
+        <div class="section-kicker">OVERVIEW</div>
+        <h2 class="section-title">From free SketchUp design to reliable production</h2>
         <p class="section-sub">
-          If you build panel-based cabinets or bespoke furniture, ArchiWood gives you a continuous
-          pipeline from design to production – with one SketchUp model as the single source of truth.
+          ArchiWood keeps SketchUp’s direct, visual modelling approach, so designers can sketch,
+          stretch and talk with the client live. On top of that we add the discipline that
+          factories need: parametric structure, hardware logic, connection rules and CNC output.
         </p>
       </div>
-      <div class="grid-3">
-        <div class="card">
-          <h3>Factories & CNC shops</h3>
-          <p>
-            Upgrade from scattered CAD/CAM tools to one visual workflow:
-            design, nesting and CNC output in a single environment.
-          </p>
-          <p>
-            <span class="pill">Nesting CNC</span>
-            <span class="pill">6-side drilling</span>
-            <span class="pill">Edge-band lines</span>
-          </p>
-        </div>
-        <div class="card">
-          <h3>Kitchen & closet studios</h3>
-          <p>
-            Present clear 3D proposals, generate reliable cutting lists and send production
-            data directly to your partner factory – without re-drawing.
-          </p>
-          <p>
-            <span class="pill">Design-to-order</span>
-            <span class="pill">Fast revisions</span>
-            <span class="pill">Client-ready visuals</span>
-          </p>
-        </div>
-        <div class="card">
-          <h3>Independent designers</h3>
-          <p>
-            Stay inside SketchUp, but gain a parametric cabinet engine that produces
-            <strong>production-ready</strong> geometry, drilling and BOMs.
-          </p>
-          <p>
-            <span class="pill">Parametric library</span>
-            <span class="pill">Production-safe</span>
-            <span class="pill">Flexible workflows</span>
-          </p>
+
+      <div class="text-grid">
+        <p>
+          <strong>For designers</strong> ArchiWood provides a free, creative workflow:
+          build any layout with parametric modules, cut around columns or beams, and keep
+          every cabinet editable. Doors and carcasses can be swapped to different materials
+          in one click, so you can explore finish combinations without rebuilding a model.
+        </p>
+        <p>
+          <strong>For manufacturers</strong> ArchiWood is a production engine:
+          every panel knows its material, edge banding, drilling and connection type.
+          Once the design is approved you simply run checks, add any remaining hardware
+          and export <strong>drawings, reports, nesting and CNC</strong> directly for the shop floor.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workflow section --------------------------------------------------- -->
+  <section id="workflow">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">WORKFLOW</div>
+        <h2 class="section-title">Core workflow & project setup</h2>
+        <p class="section-sub">
+          Define your standards once in the backend, then every new SketchUp project follows
+          the same production logic. From there, layouts, nesting and CNC become repeatable.
+        </p>
+      </div>
+
+      <div class="topic-block">
+        <div class="topic-title">Backend configuration & nesting</div>
+        <p class="topic-sub">
+          Global rules for materials, connections and hardware keep every cabinet manufacturable.
+          Nesting layouts are generated directly from the design and are ready to be sent to the machine.
+        </p>
+
+        <div class="shots-grid">
+          <figure class="shot shot-large">
+            <div class="shot-img">
+              <img src="Backend Setup1.png" alt="Backend setup – global cabinet standards">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Backend setup · cabinet standards</h4>
+              <p>
+                Define edge-banding, drilling standards, tolerances and connection types,
+                so every new cabinet follows your factory logic from the first click.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Backend Setup2.png" alt="Backend setup – material and grain rules">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Backend setup · materials & hardware rules</h4>
+              <p>
+                Fine-tune material choices, grain directions and default hardware for specific
+                products or lines.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Panel Stretching.png" alt="Panel stretching and parametric resizing">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Panel stretching</h4>
+              <p>
+                Stretch a whole unit or a single panel while joints and drilling stay correct,
+                keeping the cabinet manufacturable.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot shot-wide">
+            <div class="shot-img">
+              <img src="nesting-layout.png" alt="Nesting layout for CNC cutting">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Nesting layout</h4>
+              <p>
+                Optimised cutting patterns generated from the model. Manually tweak start points
+                and cutting sequences if needed.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="nesting-layout.jpg" alt="Alternative nesting layout view">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Nesting layout · alternative view</h4>
+              <p>
+                A different view of the same job, useful for documentation and communication
+                with the machine operator.
+              </p>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Workflow ----------------------------------------------------------- -->
-  <section id="workflow" style="background: var(--bg-light);">
+  <!-- Parametric editing ------------------------------------------------- -->
+  <section id="editing">
     <div class="container">
       <div class="section-head">
-        <div class="section-eyebrow">WORKFLOW</div>
-        <h2 class="section-title">Typical flow – from first sketch to CNC files</h2>
+        <div class="section-kicker">PARAMETRIC EDITING</div>
+        <h2 class="section-title">Fast parametric tools for everyday cabinet work</h2>
         <p class="section-sub">
-          The model you present to the client is the same model you send to the factory.
-          No redrawing, no manual programming, no Excel gymnastics.
+          In ArchiWood the layout remains free, but every cabinet is parametric.
+          Stretching, splitting and re-configuring always a keep stable, production-ready structure.
         </p>
       </div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">01</div>
-          <h3>Layout with parametric cabinets</h3>
-          <p>
-            Drag base, wall and tall units from the ArchiWood library.
-            Place corners and special units, then stretch and resize them
-            without breaking drilling or structure.
-          </p>
+
+      <div class="topic-block">
+        <div class="topic-title">Quick stretch & smart modules</div>
+        <p class="topic-sub">
+          The idea is simple: place a cabinet, stretch it to size, then refine details using
+          parameter panels. The structure, drilling and hardware all update automatically.
+        </p>
+
+        <div class="shots-grid">
+          <figure class="shot shot-large">
+            <div class="shot-img">
+              <img src="Quick Stretch.png" alt="Quick stretch of entire cabinet run">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Quick Stretch</h4>
+              <p>
+                Resize a whole cabinet run in one gesture. Carcases, doors, fillers and worktops
+                stretch together without breaking joints.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Parameter Editing3.png" alt="Parameter editing overview">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Parameter overview</h4>
+              <p>
+                Centralised parameter panel for cabinet width, height, depth, toe kicks, back options
+                and many more details.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Parameter Editing1.png" alt="Editing vertical divisions">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Vertical divisions</h4>
+              <p>
+                Quickly insert or remove vertical divisions while keeping hardware rules intact.
+              </p>
+            </figcaption>
+          </figure>
         </div>
-        <div class="step">
-          <div class="step-number">02</div>
-          <h3>Choose structure & connections</h3>
-          <p>
-            Decide on back-panel style, plinths, wall fillers, drawers,
-            and connection methods – cam-locks, dowels, Lamello, hidden fasteners
-            or mortise-and-tenon – and even mix methods in one project.
-          </p>
-        </div>
-        <div class="step">
-          <div class="step-number">03</div>
-          <h3>Auto hardware, materials & checking</h3>
-          <p>
-            Auto-place hinges, slides and handles, swap finishes for doors and carcases
-            with one click, then let ArchiWood run collision and rule checks before you order.
-          </p>
-        </div>
-        <div class="step">
-          <div class="step-number">04</div>
-          <h3>Nesting, reports & CNC export</h3>
-          <p>
-            Generate optimized nesting layouts, labels and reports.
-            Export G-code, XXL or other NC formats directly to your machines
-            or share PDF drawings and BOMs with partners.
-          </p>
+      </div>
+
+      <div class="topic-block">
+        <div class="topic-title">Detailed carcass & front control</div>
+        <p class="topic-sub">
+          Advanced parameters let you handle real-world situations: different back panel styles,
+          mid-rails, plinths, tall units, mixed hardware and more.
+        </p>
+
+        <div class="shots-grid">
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Parameter Editing2.png" alt="Editing drawers and fronts">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Drawers & fronts</h4>
+              <p>
+                Configure drawer stacks, front splits and reveal sizes with numeric control.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Parameter Editing4.png" alt="Advanced carcass options">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Advanced carcass options</h4>
+              <p>
+                Set panel styles, plinth details, hanging rails and other carcass-level parameters.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Parameter Editing5.png" alt="Parameter editing for tall units">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Tall & upper units</h4>
+              <p>
+                Focused tools for tall units and wall units, including lift-up doors and special fronts.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Parameter Editing6.png" alt="Door and panel configuration">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Door & panel configuration</h4>
+              <p>
+                Configure individual doors and decorative panels while keeping the geometry parametric.
+              </p>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Key feature blocks -------------------------------------------------- -->
-  <section id="features">
+  <!-- Smart recognition & quality control -------------------------------->
+  <section id="smart">
     <div class="container">
       <div class="section-head">
-        <div class="section-eyebrow">CAPABILITIES</div>
-        <h2 class="section-title">What makes ArchiWood different?</h2>
+        <div class="section-kicker">SMART RECOGNITION & QUALITY CONTROL</div>
+        <h2 class="section-title">Let the system find spaces, modules and errors for you</h2>
         <p class="section-sub">
-          The following modules turn SketchUp into a complete cabinet engineering system.
+          ArchiWood analyses room geometry, cabinet structure and tool settings to highlight
+          problems before they reach the CNC. At the same time, smart recognition helps you
+          fill spaces with suitable modules in one click.
         </p>
       </div>
 
-      <div class="grid-3">
-        <div class="card">
-          <h3>Parametric cabinet & door library</h3>
-          <p>
-            A rich, fully parametric library for base units, wall units, tall cabinets,
-            corner solutions and non-standard pieces. All sizes, offsets and rules
-            are editable and can be customized to your factory standards.
-          </p>
+      <div class="topic-block">
+        <div class="topic-title">Space recognition & labels</div>
+        <p class="topic-sub">
+          Turn a SketchUp room into a smart container: the system recognises openings and
+          walls and suggests cabinets that fit. Labels and QR codes keep panels tracked
+          through production.
+        </p>
+
+        <div class="shots-grid">
+          <figure class="shot shot-large">
+            <div class="shot-img">
+              <img src="Space Recognition.png" alt="Space recognition main view">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Space Recognition</h4>
+              <p>
+                Automatically analyse room geometry and fill recognised spaces with cabinet modules.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Space Recognition2.png" alt="Space recognition result">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Refining recognised spaces</h4>
+              <p>
+                A second view focused on tuning panel sizes and fronts before confirming the layout.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Label Options.png" alt="Label and QR options">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Label Options</h4>
+              <p>
+                Configure part labels, QR codes and barcodes so they match your production line.
+              </p>
+            </figcaption>
+          </figure>
         </div>
-        <div class="card">
-          <h3>Design = breakdown</h3>
-          <p>
-            What you see is what you manufacture: every panel, groove, notch and hole
-            is already in the 3D model. When design is finished, you simply add or
-            confirm hardware and generate reports – no manual 2D redrawing.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Rich connection technology</h3>
-          <p>
-            Support for classic cam-lock systems, dowels, Lamello, invisible connectors
-            and traditional mortise-and-tenon. Hybrid workflows are supported –
-            for example cam-locks for most joints combined with Lamello on visible faces.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Fast material swapping</h3>
-          <p>
-            Doors and carcases often use different finishes. ArchiWood lets you
-            replace materials <strong>per door set, per carcase, or globally</strong> with a few clicks
-            so you can try many combinations while the structure stays unchanged.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Free-form cabinet cutting</h3>
-          <p>
-            Cut corners around columns and beams by simply selecting the cabinet
-            and the obstruction. The structure remains production-ready with correct
-            panels and drilling. For special cases, draw your own cutting profile
-            and let ArchiWood generate the resulting geometry.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Automatic checking & reports</h3>
-          <p>
-            After modelling, run cabinet checks to detect missing backs, wrong
-            grain direction, overlapping drilling, unsupported hardware and more.
-            Then export structured reports for ordering, pricing and production.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Quick parametric editing</h3>
-          <p>
-            Insert mid-panels, change back-panel style, add drawers or change
-            cabinet height and width without distortion. ArchiWood treats the
-            cabinet as a parametric object, not a pile of loose faces.
-          </p>
-        </div>
-        <div class="card">
-          <h3>From 2D elevation to 3D cabinet</h3>
-          <p>
-            Already have 2D facade drawings in SketchUp? ArchiWood can convert
-            them into full parametric 3D cabinets in one step, so the time spent
-            on elevation design is never wasted.
-          </p>
-        </div>
-        <div class="card">
-          <h3>LayOut documentation in one click</h3>
-          <p>
-            Need assembly views and dimensioned drawings? Send annotated cabinet
-            views to LayOut automatically and focus on engineering instead of
-            repeating drawing work.
-          </p>
+      </div>
+
+      <div class="topic-block">
+        <div class="topic-title">Automatic error detection</div>
+        <p class="topic-sub">
+          Before you send a job to nesting, run automatic checks on every panel. ArchiWood reports
+          missing parts, impossible drillings or wrong edge banding so you can fix them instantly.
+        </p>
+
+        <div class="shots-grid">
+          <figure class="shot shot-large">
+            <div class="shot-img">
+              <img src="Auto Error Detection.png" alt="Automatic error detection overview">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Auto Error Detection</h4>
+              <p>
+                Pre-flight checks for missing parts, impossible tool paths or invalid machining
+                before releasing jobs.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Auto Error Detection2.png" alt="Auto error detection list">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Detailed issue list</h4>
+              <p>
+                Navigate directly from each reported issue to the problematic cabinet or panel.
+              </p>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Screenshots / new images ------------------------------------------- -->
-  <section id="screens" style="background: var(--bg-light);">
+  <!-- Hardware, materials & libraries ----------------------------------- -->
+  <section id="hardware">
     <div class="container">
       <div class="section-head">
-        <div class="section-eyebrow">SCREENSHOTS</div>
-        <h2 class="section-title">ArchiWood in action</h2>
+        <div class="section-kicker">LIBRARIES & HARDWARE</div>
+        <h2 class="section-title">Parametric libraries that can really go to the shop floor</h2>
         <p class="section-sub">
-          The following screens are grouped by topic. Larger tiles represent unique
-          workflows, smaller tiles show related variations.
+          ArchiWood ships with ready-to-use libraries for cabinet carcasses, doors,
+          panels and hardware. All of them are parametric and can be stretched, re-configured
+          and saved to match your factory standards.
         </p>
       </div>
 
-      <!-- Core workflow & backend ---------------------------------------- -->
-      <h3 style="font-size:15px;margin:0 0 10px;">Core workflow & project setup</h3>
-      <div class="gallery-grid" style="margin-bottom:26px;">
-        <div class="gallery-item large">
-          <img src="Backend Setup1.png" alt="Backend setup in ArchiWood">
-          <div class="gallery-caption">
-            <strong>Backend Setup – cabinet standards</strong>
-            Define global rules such as panel thicknesses, drilling standards and connection
-            types so every new cabinet follows your factory’s logic from the very first click.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Backend Setup2.png" alt="Backend setup material and rule configuration">
-          <div class="gallery-caption">
-            <strong>Backend Setup 2</strong>
-            Fine-tune edge-banding, grain direction and hardware rules for specific
-            product lines or materials.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Panel Stretching.png" alt="Panel stretching and parametric resizing">
-          <div class="gallery-caption">
-            <strong>Panel Stretching</strong>
-            Stretch a whole unit or a single panel while drilling and connections
-            automatically follow, keeping the cabinet manufacturable.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="nesting-layout.png" alt="Nesting layout preview">
-          <div class="gallery-caption">
-            <strong>Nesting Layout</strong>
-            Preview optimized cutting patterns before sending jobs to the nesting CNC.
-          </div>
+      <div class="topic-block">
+        <div class="topic-title">Cabinet libraries</div>
+        <p class="topic-sub">
+          From base units to tall and specialty cabinets, each template contains correct structure
+          and drilling. You extend the library, we keep it parametric.
+        </p>
+
+        <div class="shots-grid">
+          <figure class="shot shot-large">
+            <div class="shot-img">
+              <img src="cabinet-library1.png" alt="Cabinet library overview">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Cabinet Library 1</h4>
+              <p>
+                Ready-to-use kitchen and wardrobe modules that can be stretched,
+                re-parameterised and re-used across projects.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="cabinet-library2.png" alt="Cabinet library – base and tall units">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Cabinet Library 2</h4>
+              <p>
+                Categories for base units, tall units and corner solutions with special elements.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="cabinet-library3.png" alt="Cabinet library – detailed components">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Cabinet Library 3</h4>
+              <p>
+                Detailed components such as plinths, fillers and decorative panels.
+              </p>
+            </figcaption>
+          </figure>
         </div>
       </div>
 
-      <!-- Parametric editing --------------------------------------------- -->
-      <h3 style="font-size:15px;margin:0 0 10px;">Parametric editing & speed tools</h3>
-      <div class="gallery-grid" style="margin-bottom:26px;">
-        <div class="gallery-item large">
-          <img src="Quick Stretch.png" alt="Quick stretch of entire cabinet run">
-          <div class="gallery-caption">
-            <strong>Quick Stretch</strong>
-            Resize whole cabinet runs in one gesture. Carcases, doors, fillers and
-            worktops all update together without breaking joints.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Parameter Editing3.png" alt="Parameter editing overview">
-          <div class="gallery-caption">
-            <strong>Parameter Editing – overview</strong>
-            Centralized parameter panel for cabinet width, height, depth, toe-kick,
-            back options and much more.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Parameter Editing1.png" alt="Editing vertical divisions">
-          <div class="gallery-caption">
-            <strong>Parameter Editing 1</strong>
-            Quickly insert or remove vertical dividers while keeping hardware rules.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Parameter Editing2.png" alt="Editing drawers and fronts">
-          <div class="gallery-caption">
-            <strong>Parameter Editing 2</strong>
-            Configure drawer stacks, front splits and reveal sizes with numeric control.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Parameter Editing4.png" alt="Advanced carcass options">
-          <div class="gallery-caption">
-            <strong>Parameter Editing 4</strong>
-            Advanced carcass options such as back-panel styles, plinths and hanging rails.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Parameter Editing5.png" alt="Editing upper cabinets">
-          <div class="gallery-caption">
-            <strong>Parameter Editing 5</strong>
-            Focused tools for wall units and tall cabinets, including lift-up doors.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Parameter Editing6.png" alt="Door and panel configuration">
-          <div class="gallery-caption">
-            <strong>Parameter Editing 6</strong>
-            Configure individual doors and panels while keeping everything parametric.
-          </div>
-        </div>
-      </div>
+      <div class="topic-block">
+        <div class="topic-title">Automatic hardware & handle placement</div>
+        <p class="topic-sub">
+          Design however you like, then let ArchiWood generate mortises, slots and handles based
+          on your rules. Update rules once and apply them across a whole project.
+        </p>
 
-      <!-- Recognition & QA ----------------------------------------------- -->
-      <h3 style="font-size:15px;margin:0 0 10px;">Smart recognition, labels & quality control</h3>
-      <div class="gallery-grid" style="margin-bottom:26px;">
-        <div class="gallery-item large">
-          <img src="Space Recognition.png" alt="Automatic space recognition">
-          <div class="gallery-caption">
-            <strong>Space Recognition</strong>
-            ArchiWood analyzes the room geometry – walls, corners, windows and appliances –
-            to suggest appropriate cabinet modules and fill spaces automatically.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Space Recognition2.png" alt="Space recognition result">
-          <div class="gallery-caption">
-            <strong>Space Recognition 2</strong>
-            A recognized space filled with suitable units and panels, ready for refinement.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Label Options.png" alt="Label options">
-          <div class="gallery-caption">
-            <strong>Label Options</strong>
-            Configure part labels, QR codes and barcodes to match your production line.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Auto Error Detection.png" alt="Automatic error detection">
-          <div class="gallery-caption">
-            <strong>Auto Error Detection</strong>
-            Run pre-flight checks for missing parts, impossible drilling or wrong
-            edge-banding before releasing jobs.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Auto Error Detection2.png" alt="Error list">
-          <div class="gallery-caption">
-            <strong>Auto Error Detection 2</strong>
-            A detailed list of detected issues with direct links back to the problem cabinets.
-          </div>
-        </div>
-      </div>
+        <div class="shots-grid">
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Auto Hardware Slotting.png" alt="Automatic hardware slotting">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Auto Hardware Slotting</h4>
+              <p>
+                Automatically generate mortises and slots for connectors according to
+                hardware and process rules.
+              </p>
+            </figcaption>
+          </figure>
 
-      <!-- Hardware & library --------------------------------------------- -->
-      <h3 style="font-size:15px;margin:0 0 10px;">Hardware, materials & libraries</h3>
-      <div class="gallery-grid">
-        <div class="gallery-item large">
-          <img src="cabinet-library1.png" alt="Cabinet library overview">
-          <div class="gallery-caption">
-            <strong>Cabinet Library 1</strong>
-            A visual library of ready-to-use kitchen and wardrobe modules that can all
-            be stretched and re-configured.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="cabinet-library2.png" alt="Cabinet library categories">
-          <div class="gallery-caption">
-            <strong>Cabinet Library 2</strong>
-            Categories for base units, tall units, corner solutions and special elements.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="cabinet-library3.png" alt="Detail library">
-          <div class="gallery-caption">
-            <strong>Cabinet Library 3</strong>
-            Detail components such as plinths, fillers and decorative panels.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Auto Hardware Slotting.png" alt="Automatic hardware slotting">
-          <div class="gallery-caption">
-            <strong>Auto Hardware Slotting</strong>
-            Automatically generate mortises and slots for connectors according
-            to your chosen hardware brand.
-          </div>
-        </div>
-        <div class="gallery-item">
-          <img src="Add Handles.png" alt="Automatic handle placement">
-          <div class="gallery-caption">
-            <strong>Add Handles</strong>
-            Place handles and pulls according to rules and then update all of them
-            when the client changes style.
-          </div>
+          <figure class="shot">
+            <div class="shot-img">
+              <img src="Add Handles.png" alt="Automatic handle placement">
+            </div>
+            <figcaption class="shot-body">
+              <h4>Add Handles</h4>
+              <p>
+                Place handles and pulls according to your handle rules, then update all instances
+                when the client changes style.
+              </p>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Tutorials ---------------------------------------------------------- -->
-  <section id="tutorials">
+  <!-- Nesting & CNC (summary, images already shown above) --------------- -->
+  <section id="nesting">
     <div class="container">
       <div class="section-head">
-        <div class="section-eyebrow">LEARNING</div>
-        <h2 class="section-title">Tutorials & onboarding</h2>
+        <div class="section-kicker">NESTING & CNC</div>
+        <h2 class="section-title">From elevation to cabinet to CNC in a few clicks</h2>
         <p class="section-sub">
-          We usually start with a short online meeting to understand your production method,
-          then build a starter cabinet library together and guide you through the first real job.
-          Below are typical modules – you can link your own videos here later.
+          With ArchiWood, a SketchUp elevation can be converted into parametric cabinets,
+          checked, nested and exported to CNC. The whole pipeline is designed for batch size 1.
         </p>
       </div>
 
-      <div class="grid-3">
-        <div class="card">
-          <h3>Module 1 · Basic workflow</h3>
-          <p>
-            SketchUp setup, ArchiWood installation, creating the first kitchen,
-            stretching and editing cabinets, and exporting simple reports.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Module 2 · Connections & hardware</h3>
-          <p>
-            Setting up cam-locks, dowels, Lamello and mortise-and-tenon,
-            plus configuring hinges, slides, drawers and handle rules.
-          </p>
-        </div>
-        <div class="card">
-          <h3>Module 3 · Nesting & CNC</h3>
-          <p>
-            From optimized nesting layouts to NC file export and label printing,
-            including tips for different machine brands and control systems.
-          </p>
-        </div>
+      <div class="text-grid">
+        <p>
+          <strong>2D to 3D in one step.</strong> Elevations drawn in SketchUp can be
+          converted into full 3D parametric cabinets using ArchiWood tools. You only worry
+          about front dimensions – the system builds the internal structure automatically.
+        </p>
+        <p>
+          <strong>Drawings and documentation.</strong> Once the model is finished you can
+          export assembly views, exploded 3D drawings and send everything to LayOut with one
+          command. This removes the need for manual drafting and keeps drawings aligned
+          with the real production data.
+        </p>
       </div>
     </div>
   </section>
 
   <!-- Contact ------------------------------------------------------------ -->
-  <section id="contact" style="background: var(--bg-light);">
+  <section id="contact">
     <div class="container">
       <div class="section-head">
-        <div class="section-eyebrow">CONTACT</div>
-        <h2 class="section-title">Let’s talk about your factory or studio</h2>
+        <div class="section-kicker">CONTACT</div>
+        <h2 class="section-title">Talk about your factory, machines and targets</h2>
         <p class="section-sub">
-          Send us a short message with your country, machine types and current software.
-          We’ll reply with proposed workflow ideas and an invitation for an online demo.
+          Share where you are based, what machines you use and which software you currently have.
+          We can then prepare a focused online session and show how ArchiWood fits into your
+          production.
         </p>
       </div>
 
       <div class="contact-card">
         <p>
-          You can reach ArchiWood directly via:
+          Remote onboarding usually includes: backend setup (materials, tooling, connectors),
+          building a starter cabinet library that matches your process, and running your
+          first real order from SketchUp to CNC together with your team.
         </p>
-        <div class="contact-row">
+
+        <div class="contact-grid">
           <div>
             <div class="contact-label">Email</div>
             <div class="contact-value">wodemine1@gmail.com</div>
@@ -882,17 +1012,22 @@
             <div class="contact-value">+86&nbsp;137&nbsp;3700&nbsp;1570</div>
           </div>
           <div>
-            <div class="contact-label">Typical time zones</div>
-            <div class="contact-value">China · Europe · North America (by appointment)</div>
+            <div class="contact-label">Typical clients</div>
+            <div class="contact-value">
+              Small to mid-size factories, CNC shops, design studios and independent designers.
+            </div>
           </div>
           <div>
-            <div class="contact-label">Languages</div>
-            <div class="contact-value">Chinese · English</div>
+            <div class="contact-label">Machines</div>
+            <div class="contact-value">
+              Nesting CNC, 6-sided drills, beam saws and other G-code / XXL / NC-based equipment.
+            </div>
           </div>
         </div>
-        <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">
-          If you already know your machine model and controller (for example Biesse, Homag, SCM or others),
-          feel free to include that information – it helps us prepare the right CNC integration plan.
+
+        <p style="font-size:12px;color:#9ca3af;margin-top:10px;">
+          If you already know your machine brand, controller and preferred file formats,
+          feel free to include them in your first message so we can prepare examples.
         </p>
       </div>
     </div>
@@ -900,8 +1035,12 @@
 </main>
 
 <footer>
-  © <span id="y"></span> ArchiWood · Cabinet Design & Manufacturing System
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  © <span id="year"></span> ArchiWood · Cabinet Design & Manufacturing System
 </footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
 </body>
 </html>
